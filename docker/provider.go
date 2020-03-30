@@ -264,6 +264,7 @@ func providerSetToRegistryAuth(authSet *schema.Set) (*AuthConfigs, error) {
 						authConfig.Password = authFileConfig.Password
 						foundRegistry = true
 					}
+				}
 			}
 
 			if !foundRegistry {
