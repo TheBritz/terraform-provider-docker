@@ -257,6 +257,16 @@ func providerSetToRegistryAuth(authSet *schema.Set) (*AuthConfigs, error) {
 			}
 
 			if !foundRegistry {
+				configBaseUrl := getBaseUrl(authConfig.ServerAddress)
+				for registry, authFileConfig := range auths.Configs {
+					if configBaseUrl == normalizeRegistryAddress(registry) {
+						authConfig.Username = authFileConfig.Username
+						authConfig.Password = authFileConfig.Password
+						foundRegistry = true
+					}
+			}
+
+			if !foundRegistry {
 				return nil, fmt.Errorf("Couldn't find registry config for '%s' in file: %s",
 					authConfig.ServerAddress, filePath)
 			}

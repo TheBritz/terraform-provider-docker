@@ -156,3 +156,13 @@ func normalizeRegistryAddress(address string) string {
 	}
 	return address
 }
+
+func getBaseUrl(address string) string {
+	thisVal := address
+	lastVal := thisVal
+	for strings.Contains(thisVal, "//") {
+		lastVal = thisVal
+		thisVal = string.TrimSuffix(thisVal, "/")
+	}
+	return lastVal
+}
