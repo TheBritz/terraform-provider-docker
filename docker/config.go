@@ -163,9 +163,11 @@ func getBaseUrl(address string) string {
 	lastVal := thisVal
 	for strings.Contains(thisVal, "//") {
 		lastVal = thisVal
-		thisVal = strings.TrimRight(thisVal, "/")
+		thisArr := strings.Split(thisVal, "/")
+		thisArr = thisArr[:len(thisArr) - 1]
+		thisVal = strings.Join(thisArr, "/") 
 		thisVal = strings.TrimSuffix(thisVal, "/")
-		log.Println(fmt.Sprintf("[DEBUG] Trimmed down to '%v'", thisVal))
+		log.Println(fmt.Sprintf("[DEBUG] Trimmed down to '%s'", thisVal))
 	}
 	return lastVal
 }
