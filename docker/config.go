@@ -158,11 +158,13 @@ func normalizeRegistryAddress(address string) string {
 }
 
 func getBaseUrl(address string) string {
+	log.Println("[DEBUG] Getting the base URL for '%v'", address)
 	thisVal := address
 	lastVal := thisVal
 	for strings.Contains(thisVal, "//") {
 		lastVal = thisVal
-		thisVal = strings.TrimSuffix(thisVal, "/")
+		thisVal = strings.TrimRight(thisVal, "/")
+		log.Println("[DEBUG] Trimmed down to '%v'", thisVal)
 	}
 	return lastVal
 }
