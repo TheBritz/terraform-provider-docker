@@ -257,7 +257,7 @@ func providerSetToRegistryAuth(authSet *schema.Set) (*AuthConfigs, error) {
 			}
              
 			if !foundRegistry {
-				log.Printf("[DEBUG] Looking for Auth Configs using base URL", confs)
+				log.Println("[DEBUG] Looking for Auth Configs using base URL", filePath)
 				configBaseUrl := getBaseUrl(authConfig.ServerAddress)
 				for registry, authFileConfig := range auths.Configs {
 					if configBaseUrl == normalizeRegistryAddress(registry) {
