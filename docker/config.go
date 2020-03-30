@@ -162,7 +162,7 @@ func getBaseUrl(address string) string {
 	lastVal := thisVal
 	for strings.Contains(thisVal, "//") {
 		lastVal = thisVal
-		thisVal = string.TrimSuffix(thisVal, "/")
+		thisVal = strings.TrimSuffix(thisVal, "/")
 	}
 	return lastVal
 }
