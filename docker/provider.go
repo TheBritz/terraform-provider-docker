@@ -257,7 +257,7 @@ func providerSetToRegistryAuth(authSet *schema.Set) (*AuthConfigs, error) {
 			}
              
 			if !foundRegistry {
-				log.Println("[DEBUG] Looking for Auth Configs using base URL", filePath)
+				log.Println("[DEBUG] Looking for Auth Configs using base URL")
 				configBaseUrl := getBaseUrl(authConfig.ServerAddress)
 				for registry, authFileConfig := range auths.Configs {
 					if configBaseUrl == normalizeRegistryAddress(registry) {
@@ -274,6 +274,7 @@ func providerSetToRegistryAuth(authSet *schema.Set) (*AuthConfigs, error) {
 			}
 		}
 
+		log.Println("[DEBUG] Identified auth config for '%v'", authConfig.ServerAddress)
 		authConfigs.Configs[authConfig.ServerAddress] = authConfig
 	}
 
@@ -295,6 +296,7 @@ func newAuthConfigurations(r io.Reader) (*AuthConfigs, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Printf("[DEBUG] Converted to auth configs '%v'", auth)
 	return auth, nil
 }
 
