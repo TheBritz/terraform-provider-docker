@@ -11,7 +11,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
-
+	"log"
 	"github.com/docker/cli/cli/connhelper"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
