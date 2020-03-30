@@ -11,7 +11,7 @@ import (
 	"runtime"
 	"strings"
 	"time"
-	"log"
+    "log"
 	"github.com/docker/cli/cli/connhelper"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
@@ -158,13 +158,14 @@ func normalizeRegistryAddress(address string) string {
 }
 
 func getBaseUrl(address string) string {
-	log.Println("[DEBUG] Getting the base URL for '%v'", address)
+	log.Printlf(fmt.Sprintf("[DEBUG] Getting the base URL for '%v'", address))
 	thisVal := address
 	lastVal := thisVal
 	for strings.Contains(thisVal, "//") {
 		lastVal = thisVal
 		thisVal = strings.TrimRight(thisVal, "/")
-		log.Println("[DEBUG] Trimmed down to '%v'", thisVal)
+		thisVal = strings.TrimSuffix(thisVal, "/")
+		log.Println(fmt.Sprintf("[DEBUG] Trimmed down to '%v'", thisVal))
 	}
 	return lastVal
 }
