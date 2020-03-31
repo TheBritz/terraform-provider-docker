@@ -101,8 +101,7 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 	baseUrl := separatedUrlArr[0];
 	path := ""
 
-	if(len(separatedUrlArr) > 1)
-	{
+	if len(separatedUrlArr) > 1 {
 		path = strings.Join(separatedUrlArr[1:])	
 		lastChar = path[len(path) - 1]
 		if lastChar != "/" {
