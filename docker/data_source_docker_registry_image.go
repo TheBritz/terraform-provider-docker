@@ -95,7 +95,22 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 		}
 	}
 
-	req, err := http.NewRequest("GET", "https://"+registry+"/v2/"+image+"/manifests/"+tag, nil)
+	// Separate the base url from any pathing it 
+	// contains since path should come after 'v2'
+	separatedUrlArr := strings.Split(registry, "/")
+	baseUrl := separatedUrlArr[0];
+	path := ""
+
+	if(len(separatedUrlArr) > 1)
+	{
+		path = strings.Join(separatedUrlArr[1:])	
+		lastChar = path[len(path) - 1]
+		if lastChar != "/" {
+			path = path + "/"
+		}	
+	}
+
+	req, err := http.NewRequest("GET", "https://"+registry+"/v2/"+path+image+"/manifests/"+tag, nil)
 	if err != nil {
 		return "", fmt.Errorf("Error creating registry request: %s", err)
 	}
