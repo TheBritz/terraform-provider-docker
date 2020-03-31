@@ -149,9 +149,9 @@ func pullImage(data *Data, client *client.Client, authConfig *AuthConfigs, image
 	auth := types.AuthConfig{}
 	registry := ""
 	if pullOpts.Registry != "" {
-		registry = normalizeRegistryAddress(getBaseUrl(pullOpts.Registry))
+		registry = normalizeRegistryAddress(pullOpts.Registry)
 		log.Println("[DEBUG] retrieving configs for: " + registry)
-		if authConfig, ok := authConfig.Configs[normalizeRegistryAddress(getBaseUrl(pullOpts.Registry))]; ok {
+		if authConfig, ok := authConfig.Configs[normalizeRegistryAddress(pullOpts.Registry)]; ok {
 			auth = authConfig
 		}
 	} else {
