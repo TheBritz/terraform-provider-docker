@@ -34,8 +34,8 @@ func dataSourceDockerRegistryImage() *schema.Resource {
 }
 
 func dataSourceDockerRegistryImageRead(d *schema.ResourceData, meta interface{}) error {
-	pullOpts := parseImageOptions(d.Get("name").(string))
 	authConfig := meta.(*ProviderConfig).AuthConfigs
+	pullOpts := parseImageOptions(d.Get("name").(string), authConfig)
 
 	// Use the official Docker Hub if a registry isn't specified
 	if pullOpts.Registry == "" {
