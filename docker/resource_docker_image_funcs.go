@@ -143,7 +143,7 @@ func fetchLocalImages(data *Data, client *client.Client) error {
 }
 
 func pullImage(data *Data, client *client.Client, authConfig *AuthConfigs, image string) error {
-	pullOpts := parseImageOptions(image)
+	pullOpts := parseImageOptions(image, authConfig)
 
 	// If a registry was specified in the image name, try to find auth for it
 	auth := types.AuthConfig{}
@@ -192,7 +192,7 @@ type internalPullImageOptions struct {
 	Registry string
 }
 
-func parseImageOptions(image string) internalPullImageOptions {
+func parseImageOptions(image string, authConfig *AuthConfigs) internalPullImageOptions {
 	pullOpts := internalPullImageOptions{}
 
 	// Pre-fill with image by default, update later if tag found
@@ -200,12 +200,23 @@ func parseImageOptions(image string) internalPullImageOptions {
 
 	firstSlash := strings.Index(image, "/")
 
+	// Attempt to identify a registry in the given auths
+	registryFound := false
+	for registry, element := range authConfig.Configs {
+		if image.Contains(registry) {
+			pullOpts.Registry = registry
+			registryFound = true
+		}
+	}
+
 	// Detect the registry name - it should either contain port, be fully qualified or be localhost
 	// If the image contains more than 2 path components, or at least one and the prefix looks like a hostname
-	if strings.Count(image, "/") > 1 || firstSlash != -1 && (strings.ContainsAny(image[:firstSlash], ".:") || image[:firstSlash] == "localhost") {
-		// registry/repo/image
-		pullOpts.Registry = image[:firstSlash]
-	}
+	if !registryFound {
+		if strings.Count(image, "/") > 1 || firstSlash != -1 && (strings.ContainsAny(image[:firstSlash], ".:") || image[:firstSlash] == "localhost") {
+			// registry/repo/image
+			pullOpts.Registry = image[:firstSlash]
+		}
+    }
 
 	prefixLength := len(pullOpts.Registry)
 	tagIndex := strings.Index(image[prefixLength:], ":")
