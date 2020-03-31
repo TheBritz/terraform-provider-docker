@@ -164,7 +164,7 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 			}
 
 			if tokenResponse.StatusCode != http.StatusOK {
-				return "", fmt.Errorf("Got bad response from registry after attempting query: %s - " + tokenResponse.Status, queryAddress)
+				return "", fmt.Errorf("Got bad response from registry after attempting query with creds %s: %s - " + tokenResponse.Status, username + "|" + password, queryAddress)
 			}
 
 			body, err := ioutil.ReadAll(tokenResponse.Body)
