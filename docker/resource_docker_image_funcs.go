@@ -203,7 +203,7 @@ func parseImageOptions(image string, authConfig *AuthConfigs) internalPullImageO
 	// Attempt to identify a registry in the given auths
 	registryFound := false
 	for registry, element := range authConfig.Configs {
-		if image.Contains(registry) {
+		if strings.Contains(image, registry) {
 			pullOpts.Registry = registry
 			registryFound = true
 		}
