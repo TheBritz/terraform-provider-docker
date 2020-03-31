@@ -116,7 +116,8 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 	if err != nil {
 		return "", fmt.Errorf("Error creating registry request: %s", err)
 	}
-
+	
+	log.Println("[DEBUG] Username: %s | Password: %s", username, password)
 	if username != "" {
 		req.SetBasicAuth(username, password)
 	}
