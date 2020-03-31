@@ -109,7 +109,7 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 		}	
 	}
 
-	req, err := http.NewRequest("GET", "https://"+registry+"/v2/"+path+image+"/manifests/"+tag, nil)
+	req, err := http.NewRequest("GET", "https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag, nil)
 	if err != nil {
 		return "", fmt.Errorf("Error creating registry request: %s", err)
 	}
