@@ -69,7 +69,7 @@ func dataSourceDockerRegistryImageRead(d *schema.ResourceData, meta interface{})
 	if err != nil {
 		digest, err = getImageDigest(pullOpts.Registry, pullOpts.Repository, pullOpts.Tag, username, password, true)
 		if err != nil {
-			return fmt.Errorf("Got error when attempting to fetch image version from registry: %s", err)
+			return fmt.Errorf("Got an error when attempting to fetch image version from registry: %s", err)
 		}
 	}
 
