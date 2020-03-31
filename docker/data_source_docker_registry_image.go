@@ -11,7 +11,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
-
+	"log"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -108,6 +108,8 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 			path = path + "/"
 		}	
 	}
+
+	log.Println("[DEBUG] Getting manifest from: https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag)
 
 	req, err := http.NewRequest("GET", "https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag, nil)
 	if err != nil {
