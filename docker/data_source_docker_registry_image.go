@@ -109,7 +109,8 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 		}	
 	}
 
-	queryAddress := "[DEBUG] Getting manifest from: https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag
+	queryAddress := "https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag
+	log.Println("[DEBUG] Getting manifest from: " + queryAddress)
 	
 	req, err := http.NewRequest("GET", "https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag, nil)
 	if err != nil {
