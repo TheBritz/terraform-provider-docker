@@ -109,8 +109,8 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 		}	
 	}
 
-	log.Println("[DEBUG] Getting manifest from: https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag)
-
+	queryAddress := "[DEBUG] Getting manifest from: https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag
+	
 	req, err := http.NewRequest("GET", "https://"+baseUrl+"/v2/"+path+image+"/manifests/"+tag, nil)
 	if err != nil {
 		return "", fmt.Errorf("Error creating registry request: %s", err)
@@ -162,7 +162,7 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 			}
 
 			if tokenResponse.StatusCode != http.StatusOK {
-				return "", fmt.Errorf("Got bad response from registry: " + tokenResponse.Status)
+				return "", fmt.Errorf("Got bad response from registry after attempting query: %s - " + tokenResponse.Status, queryAddress)
 			}
 
 			body, err := ioutil.ReadAll(tokenResponse.Body)
@@ -184,7 +184,7 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 			}
 
 			if digestResponse.StatusCode != http.StatusOK {
-				return "", fmt.Errorf("Got bad response from registry: " + digestResponse.Status)
+				return "", fmt.Errorf("Got bad response from registry after attempting query: %s - " + digestResponse.Status, queryAddress)
 			}
 
 			return getDigestFromResponse(digestResponse)
@@ -194,7 +194,7 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 
 		// Some unexpected status was given, return an error
 	default:
-		return "", fmt.Errorf("Got bad response from registry: " + resp.Status)
+		return "", fmt.Errorf("Got bad response from registry after attempting query: %s - " + resp.Status, queryAddress)
 	}
 }
 
