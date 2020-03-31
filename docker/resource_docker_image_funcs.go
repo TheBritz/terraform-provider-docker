@@ -169,7 +169,7 @@ func pullImage(data *Data, client *client.Client, authConfig *AuthConfigs, image
 		RegistryAuth: base64.URLEncoding.EncodeToString(encodedJSON),
 	})
 	if err != nil {
-		return fmt.Errorf("error pulling image %s: %s", image, err)
+		return fmt.Errorf("error pulling image %s: %s - tried to use %s to retrieve config auth", image, err, registry)
 	}
 	defer out.Close()
 
