@@ -59,7 +59,7 @@ func dataSourceDockerRegistryImageRead(d *schema.ResourceData, meta interface{})
 	username := ""
 	password := ""
 
-	if auth, ok := authConfig.Configs[normalizeRegistryAddress(pullOpts.Registry)]; ok {
+	if auth, ok := authConfig.Configs[normalizeRegistryAddress(getBaseUrl(pullOpts.Registry))]; ok {
 		username = auth.Username
 		password = auth.Password
 	}
@@ -185,9 +185,9 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 				return "", fmt.Errorf("Error during registry request: %s", err)
 			}
 
-			if digestResponse.StatusCode != http.StatusOK {
-				return "", fmt.Errorf("Got bad digest response from registry after attempting query with creds %s: %s - digest: " + digestResponse.Status + "token: " + tokenResponse.Status, username + "|" + password, queryAddress)
-			}
+			// if digestResponse.StatusCode != http.StatusOK {
+			// 	return "", fmt.Errorf("Got bad digest response from registry after attempting query with creds %s: %s - digest: " + digestResponse.Status + "token: " + tokenResponse.Status, username + "|" + password, queryAddress)
+			// }
 
 			return getDigestFromResponse(digestResponse)
 		}
