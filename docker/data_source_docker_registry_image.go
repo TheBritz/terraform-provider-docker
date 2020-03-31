@@ -186,7 +186,7 @@ func getImageDigest(registry, image, tag, username, password string, fallback bo
 			}
 
 			if digestResponse.StatusCode != http.StatusOK {
-				return "", fmt.Errorf("Got bad digest response from registry after attempting query with creds %s: %s - digest: " + digestResponse.Status + "token: " tokenResponse.Status, username + "|" + password, queryAddress)
+				return "", fmt.Errorf("Got bad digest response from registry after attempting query with creds %s: %s - digest: " + digestResponse.Status + "token: " + tokenResponse.Status, username + "|" + password, queryAddress)
 			}
 
 			return getDigestFromResponse(digestResponse)
